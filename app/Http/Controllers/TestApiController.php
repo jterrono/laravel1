@@ -54,7 +54,6 @@ class TestApiController extends Controller
     	$input = array(
     		'name' => 'API Product',
     		'description' => 'API DESCRIPTION',
-    		'price' => '99.99'
     	);
 
     	$this->send_curl('product', 'POST', $input);

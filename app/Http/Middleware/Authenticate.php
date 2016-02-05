@@ -17,9 +17,20 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        //$t = $request->headers;
+        
 
+        if(empty($_SERVER['HTTP_API_USERNAME']) || empty($_SERVER['HTTP_API_KEY']))
+        {
+            return response('Unauthorized.', 401);
+        }
         //dd($_SERVER);
+
+        $arr = array(
+            'email' => $_SERVER['HTTP_API_USERNAME'],
+            'api_key' => $_SERVER['HTTP_API_KEY']
+        );
+
+        dd($arr);
         if (Auth::guard($guard)->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

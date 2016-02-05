@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Product;
 use App\User;
+use Validator;
 
 class ApiController extends Controller
 {
@@ -21,9 +22,8 @@ class ApiController extends Controller
     	return $products;
     }
 
-    public function get_products(REQUEST $request)
+    public function get_products()
     {
-    	dd('aaa');
     	$products = Product::where('status', '=', '1')->get();
 
     	return $products;
@@ -45,11 +45,34 @@ class ApiController extends Controller
 
     public function add_product(REQUEST $request)
     {	
+    	$validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+        	return $this->formatValidationErrors($validator);
+
+        }
+        
     	Product::create($request->input());
     }
 
     public function update_product($id, Request $request)
     {
+    	$validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+        	return $this->formatValidationErrors($validator);
+
+        }
 
     	$product = Product::findOrFail($id);
 

@@ -36,7 +36,7 @@ Route::get('/test/api/get_user_products', 'TestApiController@get_user_products')
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['api', 'auth']], function () {
     //
     
     // Product Calls
