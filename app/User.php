@@ -27,4 +27,15 @@ class User extends Authenticatable
     public function products(){
         return $this->belongstoMany('App\Product', 'product_user');
     }
+
+    public function setPasswordAttribute($pass)
+    {
+        $this->attributes['password'] = Hash::make($pass);
+        
+    }
+
+    public function getAuthPassword() {
+        $pwd = ($this->password);
+    return $pwd;
+}
 }

@@ -20,10 +20,13 @@ Route::get('/products', function () {
 Route::get('/test/api/get_product/{id}', 'TestApiController@get_product');
 Route::get('/test/api/get_products', 'TestApiController@get_products');
 Route::get('/test/api/update_product', 'TestApiController@update_product');
+Route::get('/test/api/update_product_image', 'TestApiController@update_product_image');
 Route::get('/test/api/add_product', 'TestApiController@add_product');
 Route::get('/test/api/delete_product/{id}', 'TestApiController@delete_product');
 
 Route::get('/test/api/get_user_products', 'TestApiController@get_user_products');
+Route::get('/test/api/add_user_product', 'TestApiController@add_user_product');
+Route::get('/test/api/delete_user_product', 'TestApiController@delete_user_product');
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +46,9 @@ Route::group(['middleware' => ['api', 'auth']], function () {
 	Route::get('/product/{id}', 'ApiController@get_product');
 	Route::put('/product/{id}', 'ApiController@update_product');
 	Route::post('/product', 'ApiController@add_product');
+	Route::post('/product_image', 'ApiController@product_image');
+	
+	
 	Route::delete('/product/{id}', 'ApiController@delete_product');
 
 	// List ALL Products
@@ -51,9 +57,9 @@ Route::group(['middleware' => ['api', 'auth']], function () {
 Route::get('/get_users', 'ApiController@get_users');
 
 	// User Product Calls
-	Route::get('/add_user_product', 'ApiController@add_user_product');
-Route::get('/get_user_products', 'ApiController@get_user_products');
-Route::get('/delete_user_product', 'ApiController@delete_user_product');
+	Route::get('/user/products', 'ApiController@get_user_products');
+Route::post('/user/product', 'ApiController@add_user_product');
+Route::delete('/user/product', 'ApiController@delete_user_product');
 
 
 
