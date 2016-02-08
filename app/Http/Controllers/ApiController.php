@@ -28,7 +28,7 @@ class ApiController extends Controller
     private function getUserId()
     {
         $user = Auth::user();
-
+        dd('zzz');
         return $user->id;
     }
 
@@ -107,11 +107,12 @@ class ApiController extends Controller
      */
     public function get_products()
     {   
+
     	$products = Product::where('status', '=', '1')
 
                             ->get();
 
-        
+        dd($products);
         if($products->isEmpty())
         {
             return $this->_output_404();
@@ -214,7 +215,7 @@ class ApiController extends Controller
      */
     public function delete_product($id)
     {
-    	$product = Product::where('status', '=', '1')->findOrFail($id);
+    	$product = Product::where('status', '=', '1')->find($id);
         
         if(!$product)
         {

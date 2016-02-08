@@ -18,13 +18,13 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         
-
+        dd($_SERVER);
         if(empty($_SERVER['HTTP_API_USERNAME']) || empty($_SERVER['HTTP_API_KEY']))
         {
             return response('Unauthorized.', 401);
         }
         
-
+        
         $arr = array(
             'email' => $_SERVER['HTTP_API_USERNAME'],
             'password' => ($_SERVER['HTTP_API_KEY'])

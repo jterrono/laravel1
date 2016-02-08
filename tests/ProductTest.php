@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+//use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -16,7 +16,7 @@ class ProductTest extends TestCase
      */
     public function testGetProductsSuccess()
     {
-        $this->withoutMiddleware();
+        //$this->withoutMiddleware();
 
         $response = $this->call('GET', '/products/');
 
@@ -39,7 +39,7 @@ class ProductTest extends TestCase
      */
     public function testGetProductsNegative()
     {
-        $this->withoutMiddleware();
+        //$this->withoutMiddleware();
 
         $response = $this->call('GET', '/products/');
       //  dd($response);
@@ -62,7 +62,7 @@ class ProductTest extends TestCase
      */
     public function testUpdateProductSuccess()
     {
-    	$this->withoutMiddleware();
+    	//$this->withoutMiddleware();
 
     	$post_data = array(
     		'name' => 'Pants',
@@ -88,7 +88,7 @@ class ProductTest extends TestCase
      */
     public function testUpdateProductMissingInput()
     {
-    	$this->withoutMiddleware();
+    	//$this->withoutMiddleware();
 
     	$post_data = array(
     		'name' => 'Pants'
@@ -114,7 +114,7 @@ class ProductTest extends TestCase
      */
     public function testUpdateProductNotFound()
     {
-    	$this->withoutMiddleware();
+    	//$this->withoutMiddleware();
 
     	$post_data = array(
     		'name' => 'Pants'
@@ -129,8 +129,110 @@ class ProductTest extends TestCase
     	$this->assertEquals(0, $json->success);
     }
 
+    /**
+     * Delete Product
+     *
+     * Testing for a Successful response in deleting a product
+     *
+     * @return void
+     */
+    public function testDeleteProductSuccessful()
+    {
+    	//$this->withoutMiddleware();
+
+    	$response = $this->call('DELETE', '/product/2');
+    	
+    	$json = json_decode($response->getContent());
 
 
+    	$this->assertEquals(200, $response->status());
+    	$this->assertEquals(1, $json->success);
+    }
+
+    /**
+     * Delete Product
+     *
+     * Testing for a Failed response in deleting a product
+     *
+     * @return void
+     */
+    public function testDeleteProductNotFound()
+    {
+    	//$this->withoutMiddleware();
+
+    	$response = $this->call('DELETE', '/product/10');
+    	
+    	$json = json_decode($response->getContent());
+
+
+    	$this->assertEquals(404, $response->status());
+    	$this->assertEquals(0, $json->success);
+    }
+
+
+    /**
+     * Create Product
+     *
+     * Testing for a POSITIVE response in creating a product
+     *
+     * @return void
+     */
+    public function testCreateProductSuccess()
+    { 
+    	//$this->withoutMiddleware();
+
+    	$post_data = array(
+    		'name' => 'Pants11',
+    		'description' => 'Blue Pants',
+    		'price' => '299'
+    	);
+
+    	$response = $this->call('POST', '/product', $post_data);
+
+    	$json = json_decode($response->getContent());
+
+
+    	$this->assertEquals(201, $response->status());
+    	$this->assertEquals(1, $json->success);
+    	
+    }
+
+
+	/**
+     * Create Product
+     *
+     * Testing for a NEGATIVE response in creating a product
+     *
+     * @return void
+     */
+    public function testCreateProductFailure()
+    {
+    	//$this->withoutMiddleware();
+
+    	$post_data = array(
+    		'name' => 'Pants',
+    		'description' => 'Blue Pants'
+    	);
+
+    	$response = $this->call('POST', '/product', $post_data);
+
+    	$json = json_decode($response->getContent());
+
+    	
+    	$this->assertEquals(400, $response->status());
+    	$this->assertEquals(0, $json->success);
+    }
+
+/*
+    public function testFileUpload()
+    {
+    	$this->withoutMiddleware();
+
+    	$uploadedFile = new Symfony\Component\HttpFoundation\File\UploadedFile('/home/vagrant/Code/hello-james/' . '/lawline.jpeg', 'lawline.jpeg', null, null, null, true);
+
+    	$response = $this->call('POST', '/product_image', [], [], ['filetest' => $uploadedFile]);
+    }
+*/
   
 
 }
